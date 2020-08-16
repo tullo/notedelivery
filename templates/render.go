@@ -7,10 +7,10 @@ import (
 	"log"
 
 	"github.com/packago/config"
-	"github.com/danskeren/note.delivery/templates/tmpl"
 	"github.com/tdewolff/minify"
 	"github.com/tdewolff/minify/css"
 	"github.com/tdewolff/minify/html"
+	"github.com/tullo/note.delivery/templates/tmpl"
 )
 
 var tmpls map[string]*template.Template = make(map[string]*template.Template)

@@ -1,4 +1,4 @@
-module github.com/danskeren/note.delivery
+module github.com/tullo/note.delivery
 
 go 1.14
 

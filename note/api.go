@@ -6,13 +6,13 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/danskeren/note.delivery/db"
-	"github.com/danskeren/note.delivery/templates"
 	"github.com/dgraph-io/badger"
 	"github.com/go-chi/chi"
 	"github.com/packago/config"
 	"github.com/packago/cookie"
 	"github.com/packago/generate"
+	"github.com/tullo/note.delivery/db"
+	"github.com/tullo/note.delivery/templates"
 	"golang.org/x/crypto/bcrypt"
 )
 
