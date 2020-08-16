@@ -1,6 +1,6 @@
 module github.com/danskeren/note.delivery
 
-go 1.12
+go 1.14
 
 require (
 	github.com/danskeren/database v0.0.0-20190601051758-80c31160bcad
