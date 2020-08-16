@@ -1,0 +1,9 @@
+{
+  "session.key" : "put.a.name.here",
+  "environment" : "development",
+  "port.development" : ":4200",
+  "session.development.authenticationKey" : "generate one with 'openssl rand -base64 32'",
+  "session.development.encryptionKey" : "generate one with 'openssl rand -base64 16'",
+  "session.development.domain" : "localhost",
+  "session.development.maxAge" : 3600
+}
