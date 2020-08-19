@@ -1,6 +1,6 @@
 module github.com/tullo/note.delivery
 
-go 1.14
+go 1.15
 
 require (
 	github.com/danskeren/database v0.0.0-20190601051758-80c31160bcad
