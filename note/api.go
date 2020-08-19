@@ -27,7 +27,7 @@ type Note struct {
 	Password  []byte `json:"password"`
 }
 
-func NoteGET(w http.ResponseWriter, r *http.Request) {
+func One(w http.ResponseWriter, r *http.Request) {
 	sess, _ := cookie.GetSession(r, config.File().GetString("session.key"))
 	commonData := templates.ReadCommonData(w, r)
 	noteBytes, err := db.BadgerDB.Get([]byte(chi.URLParam(r, "noteid")))
@@ -62,7 +62,7 @@ func NoteGET(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func CreateNote(w http.ResponseWriter, r *http.Request) {
+func Create(w http.ResponseWriter, r *http.Request) {
 	commonData := templates.ReadCommonData(w, r)
 	r.Body = http.MaxBytesReader(w, r.Body, MAXNOTESIZE)
 	sess, _ := cookie.GetSession(r, config.File().GetString("session.key"))
@@ -121,7 +121,7 @@ func CreateNote(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, fmt.Sprintf("/%s", note.ID), http.StatusSeeOther)
 }
 
-func UnlockNotePOST(w http.ResponseWriter, r *http.Request) {
+func Unlock(w http.ResponseWriter, r *http.Request) {
 	sess, _ := cookie.GetSession(r, config.File().GetString("session.key"))
 	commonData := templates.ReadCommonData(w, r)
 	noteBytes, err := db.BadgerDB.Get([]byte(chi.URLParam(r, "noteid")))
@@ -160,7 +160,7 @@ func UnlockNotePOST(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func DeleteNotePOST(w http.ResponseWriter, r *http.Request) {
+func Delete(w http.ResponseWriter, r *http.Request) {
 	commonData := templates.ReadCommonData(w, r)
 	sess, _ := cookie.GetSession(r, config.File().GetString("session.key"))
 

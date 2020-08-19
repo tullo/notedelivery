@@ -11,7 +11,7 @@ import (
 	"github.com/packago/config"
 	"github.com/tullo/note.delivery/note"
 	"github.com/tullo/note.delivery/templates"
-	limiter "github.com/ulule/limiter/v3"
+	"github.com/ulule/limiter/v3"
 	"github.com/ulule/limiter/v3/drivers/middleware/stdlib"
 	"github.com/ulule/limiter/v3/drivers/store/memory"
 )
@@ -28,32 +28,31 @@ func main() {
 	})
 	r.Use(cors.Handler)
 
-	store := memory.NewStore()
 	rate, err := limiter.NewRateFromFormatted("500-H")
 	if err != nil {
 		panic(err)
 	}
-	limiterMiddleware := stdlib.NewMiddleware(limiter.New(store, rate, limiter.WithTrustForwardHeader(true)))
-	limiterMiddleware.OnLimitReached = rateLimitGET
+	store := memory.NewStore()
+	mw := stdlib.NewMiddleware(limiter.New(store, rate, limiter.WithTrustForwardHeader(true)))
+	mw.OnLimitReached = rateLimitHandler
 
 	r.Group(func(r chi.Router) {
-		r.Use(limiterMiddleware.Handler)
-		r.Get("/", indexGET)
-		r.Get("/protect-your-privacy", protectYourPrivacyGET)
-		r.Get("/privacy-policy", privacyPolicyGET)
-		r.Post("/", note.CreateNote)
-		r.Get("/{noteid}", note.NoteGET)
-		r.Post("/{noteid}", note.UnlockNotePOST)
-		r.Post("/{noteid}/delete", note.DeleteNotePOST)
-		r.NotFound(notFoundGET)
+		r.Use(mw.Handler)
+		r.Get("/", index)
+		r.Get("/protect-your-privacy", privacy)
+		r.Get("/privacy-policy", policy)
+		r.Post("/", note.Create)
+		r.Get("/{noteid}", note.One)
+		r.Post("/{noteid}", note.Unlock)
+		r.Post("/{noteid}/delete", note.Delete)
+		r.NotFound(notFound)
 	})
 
-	currentDir, err := os.Getwd()
+	wd, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
-	filesDir := filepath.Join(currentDir, "static")
-	FileServer(r, "/static", http.Dir(filesDir))
+	fileServer(r, "/static", http.Dir(filepath.Join(wd, "static")))
 
 	switch config.File().GetString("environment") {
 	case "development":
@@ -65,7 +64,7 @@ func main() {
 	}
 }
 
-func FileServer(r chi.Router, path string, root http.FileSystem) {
+func fileServer(r chi.Router, path string, root http.FileSystem) {
 	if strings.ContainsAny(path, "{}*") {
 		panic("FileServer does not permit URL parameters.")
 	}
@@ -80,7 +79,7 @@ func FileServer(r chi.Router, path string, root http.FileSystem) {
 	}))
 }
 
-func notFoundGET(w http.ResponseWriter, r *http.Request) {
+func notFound(w http.ResponseWriter, r *http.Request) {
 	commonData := templates.ReadCommonData(w, r)
 	commonData.MetaTitle = "404"
 	templates.Render(w, "not-found.html", map[string]interface{}{
@@ -88,28 +87,28 @@ func notFoundGET(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func indexGET(w http.ResponseWriter, r *http.Request) {
+func index(w http.ResponseWriter, r *http.Request) {
 	commonData := templates.ReadCommonData(w, r)
 	templates.Render(w, "index.html", map[string]interface{}{
 		"Common": commonData,
 	})
 }
 
-func protectYourPrivacyGET(w http.ResponseWriter, r *http.Request) {
+func privacy(w http.ResponseWriter, r *http.Request) {
 	commonData := templates.ReadCommonData(w, r)
 	templates.Render(w, "protect-your-privacy.html", map[string]interface{}{
 		"Common": commonData,
 	})
 }
 
-func privacyPolicyGET(w http.ResponseWriter, r *http.Request) {
+func policy(w http.ResponseWriter, r *http.Request) {
 	commonData := templates.ReadCommonData(w, r)
 	templates.Render(w, "privacy-policy.html", map[string]interface{}{
 		"Common": commonData,
 	})
 }
 
-func rateLimitGET(w http.ResponseWriter, r *http.Request) {
+func rateLimitHandler(w http.ResponseWriter, r *http.Request) {
 	commonData := templates.ReadCommonData(w, r)
 	commonData.MetaTitle = "Rate Limited"
 	templates.Render(w, "rate-limit.html", map[string]interface{}{
