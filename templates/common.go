@@ -1,8 +1,8 @@
 package templates
 
 import (
-	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"net/url"
 
@@ -21,7 +21,7 @@ type CommonData struct {
 	CurrentURL      template.URL
 }
 
-func ReadCommonData(w http.ResponseWriter, r *http.Request) CommonData {
+func ReadCommonData(log *log.Logger, w http.ResponseWriter, r *http.Request) CommonData {
 	currentURL := "/"
 	if r.URL.Path != "" {
 		currentURL = r.URL.Path
@@ -36,7 +36,7 @@ func ReadCommonData(w http.ResponseWriter, r *http.Request) CommonData {
 	flashes := sess.Flashes()
 
 	if err := sess.Save(r, w); err != nil {
-		fmt.Println(err)
+		log.Println("session not saved:", err)
 	}
 	return CommonData{
 		CSRF:       csrf.TemplateField(r),

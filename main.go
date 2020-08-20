@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -17,6 +18,8 @@ import (
 )
 
 func main() {
+	log := log.New(os.Stdout, "NOTE.DELIVERY : ", log.LstdFlags|log.Lmicroseconds|log.Lshortfile)
+
 	r := chi.NewRouter()
 	cors := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
@@ -34,18 +37,20 @@ func main() {
 	}
 	store := memory.NewStore()
 	mw := stdlib.NewMiddleware(limiter.New(store, rate, limiter.WithTrustForwardHeader(true)))
-	mw.OnLimitReached = rateLimitHandler
+	mw.OnLimitReached = rateLimitHandler(log)
+
+	note := note.New(log)
 
 	r.Group(func(r chi.Router) {
 		r.Use(mw.Handler)
-		r.Get("/", index)
-		r.Get("/protect-your-privacy", privacy)
-		r.Get("/privacy-policy", policy)
+		r.Get("/", index(log))
+		r.Get("/protect-your-privacy", privacy(log))
+		r.Get("/privacy-policy", policy(log))
 		r.Post("/", note.Create)
 		r.Get("/{noteid}", note.One)
 		r.Post("/{noteid}", note.Unlock)
 		r.Post("/{noteid}/delete", note.Delete)
-		r.NotFound(notFound)
+		r.NotFound(notFound(log))
 	})
 
 	wd, err := os.Getwd()
@@ -79,39 +84,51 @@ func fileServer(r chi.Router, path string, root http.FileSystem) {
 	}))
 }
 
-func notFound(w http.ResponseWriter, r *http.Request) {
-	commonData := templates.ReadCommonData(w, r)
-	commonData.MetaTitle = "404"
-	templates.Render(w, "not-found.html", map[string]interface{}{
-		"Common": commonData,
-	})
+func notFound(log *log.Logger) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		cd := templates.ReadCommonData(log, w, r)
+		cd.MetaTitle = "404"
+		templates.Render(w, "not-found.html", map[string]interface{}{
+			"Common": cd,
+		})
+	}
+
 }
 
-func index(w http.ResponseWriter, r *http.Request) {
-	commonData := templates.ReadCommonData(w, r)
-	templates.Render(w, "index.html", map[string]interface{}{
-		"Common": commonData,
-	})
+func index(log *log.Logger) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		cd := templates.ReadCommonData(log, w, r)
+		templates.Render(w, "index.html", map[string]interface{}{
+			"Common": cd,
+		})
+	}
 }
 
-func privacy(w http.ResponseWriter, r *http.Request) {
-	commonData := templates.ReadCommonData(w, r)
-	templates.Render(w, "protect-your-privacy.html", map[string]interface{}{
-		"Common": commonData,
-	})
+func privacy(log *log.Logger) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		cd := templates.ReadCommonData(log, w, r)
+		templates.Render(w, "protect-your-privacy.html", map[string]interface{}{
+			"Common": cd,
+		})
+
+	}
 }
 
-func policy(w http.ResponseWriter, r *http.Request) {
-	commonData := templates.ReadCommonData(w, r)
-	templates.Render(w, "privacy-policy.html", map[string]interface{}{
-		"Common": commonData,
-	})
+func policy(log *log.Logger) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		cd := templates.ReadCommonData(log, w, r)
+		templates.Render(w, "privacy-policy.html", map[string]interface{}{
+			"Common": cd,
+		})
+	}
 }
 
-func rateLimitHandler(w http.ResponseWriter, r *http.Request) {
-	commonData := templates.ReadCommonData(w, r)
-	commonData.MetaTitle = "Rate Limited"
-	templates.Render(w, "rate-limit.html", map[string]interface{}{
-		"Common": commonData,
-	})
+func rateLimitHandler(log *log.Logger) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		cd := templates.ReadCommonData(log, w, r)
+		cd.MetaTitle = "Rate Limited"
+		templates.Render(w, "rate-limit.html", map[string]interface{}{
+			"Common": cd,
+		})
+	}
 }

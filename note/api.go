@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 
 	"github.com/dgraph-io/badger"
@@ -27,9 +28,17 @@ type Note struct {
 	Password  []byte `json:"password"`
 }
 
-func One(w http.ResponseWriter, r *http.Request) {
+type api struct {
+	log *log.Logger
+}
+
+func New(l *log.Logger) *api {
+	return &api{log: l}
+}
+
+func (a api) One(w http.ResponseWriter, r *http.Request) {
 	sess, _ := cookie.GetSession(r, config.File().GetString("session.key"))
-	commonData := templates.ReadCommonData(w, r)
+	commonData := templates.ReadCommonData(a.log, w, r)
 	noteBytes, err := db.BadgerDB.Get([]byte(chi.URLParam(r, "noteid")))
 	if err != nil {
 		if err == badger.ErrKeyNotFound {
@@ -38,10 +47,10 @@ func One(w http.ResponseWriter, r *http.Request) {
 				"Common": commonData,
 			})
 			return
-		} else {
-			sess.AddFlash(err.Error())
-			sess.Save(r, w)
 		}
+		sess.AddFlash(err.Error())
+		sess.Save(r, w)
+
 	}
 	var note Note
 	if err = json.Unmarshal(noteBytes, &note); err != nil {
@@ -62,8 +71,8 @@ func One(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func Create(w http.ResponseWriter, r *http.Request) {
-	commonData := templates.ReadCommonData(w, r)
+func (a api) Create(w http.ResponseWriter, r *http.Request) {
+	commonData := templates.ReadCommonData(a.log, w, r)
 	r.Body = http.MaxBytesReader(w, r.Body, MAXNOTESIZE)
 	sess, _ := cookie.GetSession(r, config.File().GetString("session.key"))
 	if r.PostFormValue("note") == "" {
@@ -121,9 +130,9 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, fmt.Sprintf("/%s", note.ID), http.StatusSeeOther)
 }
 
-func Unlock(w http.ResponseWriter, r *http.Request) {
+func (a api) Unlock(w http.ResponseWriter, r *http.Request) {
 	sess, _ := cookie.GetSession(r, config.File().GetString("session.key"))
-	commonData := templates.ReadCommonData(w, r)
+	commonData := templates.ReadCommonData(a.log, w, r)
 	noteBytes, err := db.BadgerDB.Get([]byte(chi.URLParam(r, "noteid")))
 	if err != nil {
 		if err == badger.ErrKeyNotFound {
@@ -144,7 +153,7 @@ func Unlock(w http.ResponseWriter, r *http.Request) {
 	}
 	err = bcrypt.CompareHashAndPassword(note.Password, []byte(r.PostFormValue("password")))
 	if err != nil {
-		fmt.Println(err)
+		a.log.Println("password does not match the note password", err)
 		sess.AddFlash("Given password does not match the note password")
 		sess.Save(r, w)
 		http.Redirect(w, r, fmt.Sprintf("/%s", chi.URLParam(r, "noteid")), http.StatusSeeOther)
@@ -160,8 +169,8 @@ func Unlock(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func Delete(w http.ResponseWriter, r *http.Request) {
-	commonData := templates.ReadCommonData(w, r)
+func (a api) Delete(w http.ResponseWriter, r *http.Request) {
+	commonData := templates.ReadCommonData(a.log, w, r)
 	sess, _ := cookie.GetSession(r, config.File().GetString("session.key"))
 
 	noteBytes, err := db.BadgerDB.Get([]byte(chi.URLParam(r, "noteid")))
@@ -186,7 +195,7 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	if len(note.Password) > 0 {
 		err = bcrypt.CompareHashAndPassword(note.Password, []byte(r.PostFormValue("confirm")))
 		if err != nil {
-			fmt.Println(err)
+			a.log.Println("password does not match the note password", err)
 			sess.AddFlash("Given password does not match the note password")
 			sess.Save(r, w)
 			http.Redirect(w, r, fmt.Sprintf("/%s", chi.URLParam(r, "noteid")), http.StatusSeeOther)
