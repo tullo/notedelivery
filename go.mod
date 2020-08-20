@@ -9,11 +9,11 @@ require (
 	github.com/go-chi/cors v1.1.1
 	github.com/gorilla/csrf v1.7.0
 	github.com/packago/config v0.0.0-20190627203747-861250ba6cac
-	github.com/packago/cookie v0.0.0-20190627203510-70e29fbb2a1f
 	github.com/packago/generate v0.0.0-20190627204322-bb70f0056f92
 	github.com/tdewolff/minify v2.3.6+incompatible
 	github.com/tdewolff/parse v2.3.4+incompatible // indirect
 	github.com/tdewolff/test v1.0.6 // indirect
+	github.com/tullo/cookie v1.0.0
 	github.com/ulule/limiter/v3 v3.5.0
 	golang.org/x/crypto v0.0.0-20200728195943-123391ffb6de
 )
