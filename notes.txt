@@ -1,0 +1,34 @@
+https://github.com/gorilla/sessions/blob/master/store.go#L49
+// It is recommended to use an authentication key with 32 or 64 bytes.
+// The encryption key, if set, must be either 16, 24, or 32 bytes to select
+// AES-128, AES-192, or AES-256 modes.
+func NewCookieStore(keyPairs ...[]byte) *CookieStore {
+
+https://github.com/gorilla/securecookie
+The hashKey is required, used to authenticate the cookie value using HMAC.
+It is recommended to use a key with 32 or 64 bytes.
+
+The blockKey is optional, used to encrypt the cookie value -- set it to nil to not use encryption. 
+If set, the length must correspond to the block size of the encryption algorithm.
+For AES, used by default, valid lengths are 16, 24, or 32 bytes to select AES-128, AES-192, or AES-256.
+
+https://github.com/packago/cookie/blob/master/sessions.go#L25
+func NewCookieStore(name string, cookieOptions CookieOptions) {
+	if cookies[name] == nil {
+		cookies[name] = sessions.NewCookieStore(cookieOptions.AuthenticationKey, cookieOptions.EncryptionKey)
+		cookies[name].Options = &sessions.Options{
+			Domain: cookieOptions.Domain,
+			Path:   cookieOptions.Path,
+			MaxAge: cookieOptions.MaxAge,
+			Secure: cookieOptions.Secure,
+		}
+	}
+}
+
+
+https://gowebexamples.com/sessions/
+
+//===========================================================0
+https://netterminalmachine.com/blog/2020/bootstrapping-a-graphql-postgresql-backend
+Protecting data with Cloud KMS keys
+https://cloud.google.com/bigquery/docs/customer-managed-encryption

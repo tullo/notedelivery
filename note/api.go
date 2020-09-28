@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/dgraph-io/badger"
+	"github.com/dgraph-io/badger/v2"
 	"github.com/go-chi/chi"
 	"github.com/packago/config"
 	"github.com/packago/generate"
