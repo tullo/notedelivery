@@ -13,7 +13,7 @@ import (
 	"github.com/packago/generate"
 	"github.com/tullo/cookie"
 	"github.com/tullo/note.delivery/db"
-	"github.com/tullo/note.delivery/templates"
+	"github.com/tullo/note.delivery/ui/templates"
 	"golang.org/x/crypto/bcrypt"
 )
 

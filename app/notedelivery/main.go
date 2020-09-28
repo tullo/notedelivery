@@ -11,7 +11,7 @@ import (
 	"github.com/go-chi/cors"
 	"github.com/packago/config"
 	"github.com/tullo/note.delivery/note"
-	"github.com/tullo/note.delivery/templates"
+	"github.com/tullo/note.delivery/ui/templates"
 	"github.com/ulule/limiter/v3"
 	"github.com/ulule/limiter/v3/drivers/middleware/stdlib"
 	"github.com/ulule/limiter/v3/drivers/store/memory"
