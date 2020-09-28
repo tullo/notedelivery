@@ -56,7 +56,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fileServer(r, "/static", http.Dir(filepath.Join(wd, "static")))
+	fileServer(r, "/static", http.Dir(filepath.Join(wd, "ui/static")))
 
 	switch config.File().GetString("environment") {
 	case "development":

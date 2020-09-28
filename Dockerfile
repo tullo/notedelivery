@@ -13,5 +13,5 @@ RUN addgroup -g 3000 -S app && adduser -u 100000 -S app -G app --no-create-home 
 USER 100000
 WORKDIR /app
 COPY --from=go-builder --chown=app:app /build/app/notedelivery/notedelivery /app/notedelivery
-COPY --from=go-builder --chown=app:app /build/static /app/static
+COPY --from=go-builder --chown=app:app /build/ui/static /app/ui/static
 ENTRYPOINT ["/app/notedelivery"]
