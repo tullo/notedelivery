@@ -44,7 +44,6 @@ func main() {
 	r.Group(func(r chi.Router) {
 		r.Use(mw.Handler)
 		r.Get("/", index(log))
-		r.Get("/protect-your-privacy", privacy(log))
 		r.Get("/privacy-policy", policy(log))
 		r.Post("/", note.Create)
 		r.Get("/{noteid}", note.One)
@@ -101,16 +100,6 @@ func index(log *log.Logger) http.HandlerFunc {
 		templates.Render(w, "index.html", map[string]interface{}{
 			"Common": cd,
 		})
-	}
-}
-
-func privacy(log *log.Logger) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		cd := templates.ReadCommonData(log, w, r)
-		templates.Render(w, "protect-your-privacy.html", map[string]interface{}{
-			"Common": cd,
-		})
-
 	}
 }
 
