@@ -1,7 +1,8 @@
-FROM golang:1.15-alpine3.12 AS go-builder
-ADD . /build/
+FROM golang:1.15.2-alpine3.12 AS go-builder
+ENV CGO_ENABLED 0
+COPY . /build/
 WORKDIR /build
-RUN CGO_ENABLED=0 GOOS=linux go build -o main
+RUN go build -o main
 
 
 FROM alpine:3.12
