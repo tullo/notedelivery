@@ -1,4 +1,4 @@
-module github.com/tullo/note.delivery
+module github.com/tullo/notedelivery
 
 go 1.15
 
@@ -10,7 +10,6 @@ require (
 	github.com/go-chi/cors v1.1.1
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/gorilla/csrf v1.7.0
-	github.com/gorilla/sessions v1.2.1 // indirect
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/magiconair/properties v1.8.4 // indirect
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
@@ -25,7 +24,7 @@ require (
 	github.com/tdewolff/minify v2.3.6+incompatible
 	github.com/tdewolff/parse v2.3.4+incompatible // indirect
 	github.com/tdewolff/test v1.0.6 // indirect
-	github.com/tullo/cookie v1.0.0
+	github.com/tullo/cookie v1.0.1
 	github.com/ulule/limiter/v3 v3.5.0
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
 	golang.org/x/net v0.0.0-20200927032502-5d4f70055728 // indirect

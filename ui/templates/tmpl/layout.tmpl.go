@@ -52,7 +52,7 @@ const LayoutHTML = `
     <footer class="wrapper">
       <div class="links">
         <div>
-          No tracking. No bloat. <a href="https://github.com/tullo/note.delivery" target="_blank">Open Source</a>.
+          No tracking. No bloat. <a href="https://github.com/tullo/notedelivery" target="_blank">Open Source</a>.
         </div>
         <div>
           <a href="/privacy-policy">Privacy Policy</a>

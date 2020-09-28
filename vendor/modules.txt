@@ -41,7 +41,6 @@ github.com/gorilla/csrf
 # github.com/gorilla/securecookie v1.1.1
 github.com/gorilla/securecookie
 # github.com/gorilla/sessions v1.2.1
-## explicit
 github.com/gorilla/sessions
 # github.com/hashicorp/hcl v1.0.0
 github.com/hashicorp/hcl
@@ -105,7 +104,7 @@ github.com/tdewolff/parse/html
 github.com/tdewolff/parse/strconv
 # github.com/tdewolff/test v1.0.6
 ## explicit
-# github.com/tullo/cookie v1.0.0
+# github.com/tullo/cookie v1.0.1
 ## explicit
 github.com/tullo/cookie
 # github.com/ulule/limiter/v3 v3.5.0

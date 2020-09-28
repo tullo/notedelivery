@@ -12,8 +12,8 @@ import (
 	"github.com/packago/config"
 	"github.com/packago/generate"
 	"github.com/tullo/cookie"
-	"github.com/tullo/note.delivery/db"
-	"github.com/tullo/note.delivery/ui/templates"
+	"github.com/tullo/notedelivery/db"
+	"github.com/tullo/notedelivery/ui/templates"
 	"golang.org/x/crypto/bcrypt"
 )
 
