@@ -32,11 +32,8 @@ const LayoutHTML = `
   <div class="sticky-footer">
     <header>
       <div class="wrapper">
-        <div class="promo">Liberate Hong Kong</div>
-          <nav>
-            <a href="/">
-              <img src="/static/images/logo.png">Note.Delivery
-            </a>
+        <nav>
+          <a href="/"><img src="/static/images/logo.png">Note.Delivery</a>
         </nav>
       </div>
     </header>
