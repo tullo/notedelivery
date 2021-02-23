@@ -1,4 +1,5 @@
-# github.com/DataDog/zstd v1.4.5
+# github.com/DataDog/zstd v1.4.8
+## explicit
 github.com/DataDog/zstd
 # github.com/cespare/xxhash v1.1.0
 github.com/cespare/xxhash
@@ -22,7 +23,6 @@ github.com/dgryski/go-farm
 # github.com/dustin/go-humanize v1.0.0
 github.com/dustin/go-humanize
 # github.com/fsnotify/fsnotify v1.4.9
-## explicit
 github.com/fsnotify/fsnotify
 # github.com/go-chi/chi v4.1.2+incompatible
 ## explicit
@@ -30,7 +30,8 @@ github.com/go-chi/chi
 # github.com/go-chi/cors v1.1.1
 ## explicit
 github.com/go-chi/cors
-# github.com/golang/protobuf v1.4.2
+# github.com/golang/protobuf v1.4.3
+## explicit
 github.com/golang/protobuf/proto
 # github.com/golang/snappy v0.0.2
 ## explicit
@@ -58,7 +59,7 @@ github.com/hashicorp/hcl/json/token
 # github.com/magiconair/properties v1.8.4
 ## explicit
 github.com/magiconair/properties
-# github.com/mitchellh/mapstructure v1.3.3
+# github.com/mitchellh/mapstructure v1.4.1
 ## explicit
 github.com/mitchellh/mapstructure
 # github.com/packago/config v0.0.0-20190627203747-0671c1441167
@@ -72,7 +73,7 @@ github.com/packago/generate
 github.com/pelletier/go-toml
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
-# github.com/spf13/afero v1.4.0
+# github.com/spf13/afero v1.5.1
 ## explicit
 github.com/spf13/afero
 github.com/spf13/afero/mem
@@ -107,25 +108,27 @@ github.com/tdewolff/parse/strconv
 # github.com/tullo/cookie v1.0.1
 ## explicit
 github.com/tullo/cookie
-# github.com/ulule/limiter/v3 v3.5.0
+# github.com/ulule/limiter/v3 v3.8.0
 ## explicit
 github.com/ulule/limiter/v3
 github.com/ulule/limiter/v3/drivers/middleware/stdlib
 github.com/ulule/limiter/v3/drivers/store/common
 github.com/ulule/limiter/v3/drivers/store/memory
-# golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
+github.com/ulule/limiter/v3/internal/bytebuffer
+# golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83
 ## explicit
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
-# golang.org/x/net v0.0.0-20200927032502-5d4f70055728
+# golang.org/x/net v0.0.0-20210222171744-9060382bd457
 ## explicit
 golang.org/x/net/internal/timeseries
 golang.org/x/net/trace
-# golang.org/x/sys v0.0.0-20200926100807-9d91bd62050c
+# golang.org/x/sys v0.0.0-20210223095934-7937bea0104d
 ## explicit
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
-# golang.org/x/text v0.3.3
+# golang.org/x/text v0.3.5
+## explicit
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
 # google.golang.org/protobuf v1.25.0
@@ -155,9 +158,9 @@ google.golang.org/protobuf/reflect/protoreflect
 google.golang.org/protobuf/reflect/protoregistry
 google.golang.org/protobuf/runtime/protoiface
 google.golang.org/protobuf/runtime/protoimpl
-# gopkg.in/ini.v1 v1.61.0
+# gopkg.in/ini.v1 v1.62.0
 ## explicit
 gopkg.in/ini.v1
-# gopkg.in/yaml.v2 v2.3.0
+# gopkg.in/yaml.v2 v2.4.0
 ## explicit
 gopkg.in/yaml.v2
