@@ -11,16 +11,9 @@ up:
 down:
 	@docker-compose down --remove-orphans
 
-check:
-	$(shell go env GOPATH)/bin/staticcheck -go 1.15 -tests ./db/... ./note/... ./templates/...
+staticcheck:
+	$$(go env GOPATH)/bin/staticcheck -go 1.16 -tests ./...
 
-.PHONY: clone
-clone:
-	@git clone git@github.com:dominikh/go-tools.git /tmp/go-tools \
-		&& cd /tmp/go-tools \
-		&& git checkout "2020.1.5" \
-
-.PHONY: install
-install:
-	@cd /tmp/go-tools && go install -v ./cmd/staticcheck
-	$(shell go env GOPATH)/bin/staticcheck -debug.version
+staticcheck-install:
+	@GO111MODULE=on go install honnef.co/go/tools/cmd/staticcheck@v0.1.2
+	@$$(go env GOPATH)/bin/staticcheck -debug.version
