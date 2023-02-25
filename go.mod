@@ -27,10 +27,8 @@ require (
 	github.com/tdewolff/test v1.0.6 // indirect
 	github.com/tullo/cookie v1.0.1
 	github.com/ulule/limiter/v3 v3.8.0
-	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83
-	golang.org/x/net v0.0.0-20210222171744-9060382bd457 // indirect
-	golang.org/x/sys v0.0.0-20210223095934-7937bea0104d // indirect
-	golang.org/x/text v0.3.5 // indirect
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
+	golang.org/x/net v0.7.0 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
