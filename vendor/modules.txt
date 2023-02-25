@@ -123,9 +123,8 @@ golang.org/x/crypto/blowfish
 ## explicit
 golang.org/x/net/internal/timeseries
 golang.org/x/net/trace
-# golang.org/x/sys v0.0.0-20210223095934-7937bea0104d
+# golang.org/x/sys v0.1.0
 ## explicit
-golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 # golang.org/x/text v0.3.5
 ## explicit
